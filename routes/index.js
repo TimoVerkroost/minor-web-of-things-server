@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request');
-var http = require('http');
 
 require('dotenv').config();
 
+var server_url = process.env.SERVER_URL;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
