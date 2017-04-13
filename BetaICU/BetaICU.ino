@@ -101,11 +101,7 @@ void loop()
   //Check for button press
   if (digitalRead(BUTTON_PIN) == LOW)
   {
-    /* Added by Timo  */ HTTPClient http;
-    /* Added by Timo  change url to live url of express server */ http.begin("http://6e38e658.ngrok.io/");
-    /* Added by Timo  */ uint16_t httpCode = http.GET();
     sendButtonPress();
-    /* Added by Timo  */ http.end();
     delay(250);
   }
 
@@ -121,6 +117,11 @@ void sendButtonPress()
 {
   printDebugMessage("Sending button press to server");
   HTTPClient http;
+  // Added by Timo Verkroost BEGIN
+  http.begin("http://d52f2c56.ngrok.io/");
+  http.GET();
+  http.end();
+  // Added by Timo Verkroost END
   http.begin(serverURL + "/api.php?t=sqi&d=" + chipID);
   uint16_t httpCode = http.GET();
   http.end();
