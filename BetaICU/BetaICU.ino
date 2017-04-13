@@ -118,7 +118,7 @@ void sendButtonPress()
   printDebugMessage("Sending button press to server");
   HTTPClient http;
   // Added by Timo Verkroost BEGIN
-  http.begin("http://d52f2c56.ngrok.io/drinks/");
+  http.begin("http://wot-drinks.herokuapp.com/drinks/");
   http.GET();
   http.end();
   // Added by Timo Verkroost END
