@@ -37,4 +37,8 @@ router.get('/', function(req, res, next) {
   }
 });
 
+// router.post('/' function(req, res, next) {
+//   console.log('hey')
+// })
+
 module.exports = router;
