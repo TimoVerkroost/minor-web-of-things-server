@@ -21,14 +21,24 @@ The Express server sends a message to the php server and the php server changes 
 When you are finished with preparing the drinks, you can see who also wants that drink and serving the drinks will be easier.
 
 ## Flow
+#### Data Flow
 ![Flow](repo-images/wot-flow2.png)
+
+#### Code Flow
+![Flow](repo-images/wot-flow4.png)
+
+
+## Screens
+![Flow](repo-images/wot-flow3.png)
 
 <!-- ## Features -->
 
 ### Necessary
-- [ ] Node app Express server. (backend)
-- [ ] Webpage, to join the roulette  (frontend)
-- [ ] Boxes, that light up to show who is going to set the coffee (hardware)
+- [x] Node app Express server. (backend)
+- [x] Webpage, to join the roulette  (frontend)
+- [x] Boxes, that light up to show who is going to set the coffee (hardware)
+- [ ] Sensors to detect, when the drinks are ready
+- [ ] Frendly ui/ ux
 
 ## Wishlist
 <!-- - [ ]
