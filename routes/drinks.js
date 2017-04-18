@@ -23,16 +23,17 @@ function getCurrentTemperture(req, res) {
       // Sender ID
       var sender = "8C6E";
       // All devices that connected
-      var devices = ['19B4', '8EA6', '1DEA', '180F', 'CB1B'];
+      // var devices = ['19B4', '8EA6', '1DEA', '180F', 'CB1B', '8C6E'];
+      var devices = ['8C6E'];
       // Get random device when page is requested
       var device = devices[Math.floor(Math.random()*devices.length)];
       // Add new device to sender send list
-      var api_url_new = "/api.php?t=sdc&d="+ sender +"&td="+ device +"&c="+ temp;
+      var api_url_new = "/api.php?t=sdc&d="+ sender +"&td="+ device +"&c="+ temp + "&m=JIJ GAAT KOFFIE HALEN!, JE GAAT ZELF KOFFIE HALEN!";
       var call_url_new = server_url + api_url_new;
       // Add new device request
       request(call_url_new, function (error, response, data) {
         res.locals.data =  JSON.parse(data);
-        res.render('index', { device: device, color: temp });
+        res.render('drinks', { device: device, color: temp });
       });
       // Delete others connected from send list request
       var i;

@@ -101,6 +101,7 @@ void loop()
   //Check for button press
   if (digitalRead(BUTTON_PIN) == LOW)
   {
+    sendButtonPressUpdate();
     sendButtonPress();
     delay(250);
   }
@@ -117,14 +118,20 @@ void sendButtonPress()
 {
   printDebugMessage("Sending button press to server");
   HTTPClient http;
-  // Added by Timo Verkroost BEGIN
-  http.begin("http://wot-drinks.herokuapp.com/drinks/");
-  http.GET();
-  http.end();
-  // Added by Timo Verkroost END
   http.begin(serverURL + "/api.php?t=sqi&d=" + chipID);
   uint16_t httpCode = http.GET();
   http.end();
+}
+
+void sendButtonPressUpdate()
+{
+  printDebugMessage("Sending button press to server new");
+  HTTPClient http;
+  // Added by Timo Verkroost BEGIN
+  http.begin("http://cee49802.ngrok.io/drinks");
+  uint16_t httpCode = http.GET();
+  http.end();
+  // Added by Timo Verkroost END
 }
 
 void requestMessage()

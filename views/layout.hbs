@@ -3,6 +3,9 @@
   <head>
     <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/main.min.css' />
+    {{#if form.boxID}}
+      <script id="socketScript" src="javascripts/vendors/socket.io.min.js"></script>
+    {{/if}}
   </head>
   <body>
     {{{body}}}
