@@ -1,9 +1,71 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
-{{device}}
-<br>
-{{color}}
+{{#if form.boxID}}
 
-<form action="/drinks/" method="post">
-  <input type="submit">
-</form>
+  {{form.boxID}}
+  {{form.username}}
+  <br>
+  <br>
+
+  {{device}}
+  <br>
+  {{color}}
+
+  <script>
+    (function () {
+      /* global io */
+      // Check if socket is available
+      if (document.getElementById('socketScript')) {
+        var socket = io();
+        // User information form
+        var boxID = "{{form.boxID}}";
+        var username = "{{form.username}}";
+        // Define user
+        socket.emit('connection_user', socket.id, boxID, username );
+        socket.boxID = boxID;
+        socket.username = username;
+        // Get coffee message
+        socket.on('get_coffeee', function () {
+          console.log("recieve");
+        });
+        // Connect user feedback
+        socket.on('connection_user', function (id, otherID, otherUser) {
+          // Current user
+          if (socket.id === id) {
+            console.log("connectME " + socket.username);
+          }
+          // Other user
+          if (socket.id !== id) {
+            console.log("connect " + otherID + " " + otherUser);
+          }
+        });
+        // Disconnect user feedback
+        socket.on('disconnect_user', function (id, otherID, otherUser) {
+          // Other user
+          if (socket.id !== id) {
+            console.log("dis: " + otherID + " " + otherUser);
+          }
+        });
+        // Get all connections
+        socket.on('get_all_connections', function (allConnected) {
+          console.log("all connections " + allConnected);
+        });
+      }
+    })();
+  </script>
+
+{{else}}
+
+  <form action="/" id="sign-in" method="post">
+    <label>
+      BoxID <span class="required">*</span><br>
+      <input name="boxID" id="boxID" type="text" required>
+    </label>
+    <br>
+    <label>
+      username <span class="required">*</span><br>
+      <input name="username" id="username" type="text" required>
+    </label>
+    <br>
+    <input type="submit">
+  </form>
+
+{{/if}}
