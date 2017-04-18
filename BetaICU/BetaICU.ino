@@ -11,6 +11,9 @@
 
 Servo myServo;
 
+int motorTrillVal = 500;   // Set the intensitie of the vibration motor max. 1023
+int lightStripBrightness = 50; // Set the brightness of the led strip max. 255
+
 int oldTime = 0;
 int oscillationTime = 500;
 String chipID;
@@ -25,13 +28,14 @@ void printDebugMessage(String message) {
 
 void setup()
 {
+  pinMode(motorpin, OUTPUT);
   pinMode(BUTTONLOW_PIN, OUTPUT);
 
   digitalWrite(BUTTONLOW_PIN, LOW);
 
   Serial.begin(115200); Serial.println("");
   strip.begin();
-  strip.setBrightness(255);
+  strip.setBrightness(lightStripBrightness);
   setAllPixels(0, 255, 255, 1.0);
 
   WiFiManager wifiManager;
@@ -140,10 +144,10 @@ void requestMessage()
   hideColor();
 
   HTTPClient http;
-  String requestString = serverURL + "/api.php?t=gqi&d=" + chipID + "&v=2"; // look up api index, action is 
+  String requestString = serverURL + "/api.php?t=gqi&d=" + chipID + "&v=2"; // look up api index, action is
   http.begin(requestString);
   int httpCode = http.GET();
-  
+
   if (httpCode == 200)
   {
     String response;
@@ -165,6 +169,11 @@ void requestMessage()
       String springConstant = response.substring(firstComma + 1, secondComma);
       String dampConstant = response.substring(secondComma + 1, thirdComma);;
       String message = response.substring(thirdComma + 1, response.length());;
+
+      analogWrite(motorpin, motorTrillVal);  // Send a signal to turn the motorpin(D5) on.
+      printDebugMessage("Start trilling");
+      delay(2000); // wait 2 seconds
+      analogWrite(motorpin, 0); //turn off the motorpin(D5).
 
       printDebugMessage("Message received from server: \n");
       printDebugMessage("Hex color received: " + hexColor);
@@ -195,5 +204,3 @@ String generateChipID()
 
   return chipIDString;
 }
-
-

@@ -8,6 +8,8 @@
 #define BUTTONLOW_PIN D0
 #define SERVO_PIN D7
 
+#define motorpin D5 // pin for the viration motor
+
 #define FADEIN_DELAY 5
 #define FADEOUT_DELAY 8
 
@@ -21,4 +23,3 @@
 #define BACKUP_PASSWORD "BackupPassword"
 
 #endif
-

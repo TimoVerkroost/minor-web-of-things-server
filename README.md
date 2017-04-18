@@ -35,5 +35,5 @@ When you are finished with preparing the drinks, you can see who also wants that
 - [ ]
 - [x]  -->
 ## Sources
-<!-- -
--  -->
+- http://www.seeedstudio.com/forum/viewtopic.php?f=17&t=5636
+-
