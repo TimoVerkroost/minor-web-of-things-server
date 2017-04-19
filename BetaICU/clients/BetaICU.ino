@@ -1,5 +1,9 @@
 #include <OpenWiFi.h>
 
+// Temperture measurer
+#include "DHT.h"
+
+
 #include <ESP8266HTTPClient.h>
 #include <Servo.h>
 #include <ESP8266WiFi.h>
@@ -11,7 +15,11 @@
 
 Servo myServo;
 
+//Initialize temperture module
+DHT dht(DHTPIN, DHTTYPE);
+
 int oldTime = 0;
+int oldTimeCoffee = 0;
 int oscillationTime = 500;
 String chipID;
 String serverURL = SERVER_URL;
@@ -25,6 +33,8 @@ void printDebugMessage(String message) {
 
 void setup()
 {
+  dht.begin();
+
   pinMode(BUTTONLOW_PIN, OUTPUT);
 
   digitalWrite(BUTTONLOW_PIN, LOW);
@@ -105,12 +115,31 @@ void loop()
     delay(250);
   }
 
+  //Every requestDelay, send a request to temperture module
+  if (millis() > oldTimeCoffee + REQUEST_DELAY_COFFEE)
+  {
+    getCurrentCoffeeLevel();
+    oldTimeCoffee = millis();
+  }  
+
   //Every requestDelay, send a request to the server
   if (millis() > oldTime + REQUEST_DELAY)
   {
     requestMessage();
     oldTime = millis();
   }
+}
+void getCurrentCoffeeLevel()
+{
+  float t = dht.readTemperature();
+  if (isnan(t)) {
+    Serial.println("Failed to read from DHT sensor!");
+    return;
+  }
+  Serial.print("Temperature: ");
+  Serial.print(t);
+  Serial.print(" *C ");
+  Serial.println();
 }
 
 void sendButtonPress()
