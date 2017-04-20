@@ -41,6 +41,12 @@ sockIO.on('connection', function (socket) {
       userNames();
       boxIDs();
       sockIO.emit('disconnect_user', socket.id, socket.boxID, socket.username);
+      // Delete disconnected user from que
+      var api_url_delete = "/api.php?t=rdc&d=8C6E&td=" + socket.boxID;
+      var call_url_delete = server_url + api_url_delete;
+      request(call_url_delete, function (error, response) {
+        return response;
+      });
     });
   });
   // Get all connected usernames
