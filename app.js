@@ -24,7 +24,6 @@ app.use(compression());
 app.sockIO = sockIO;
 
 var devices = [];
-var connectedUsers = [];
 sockIO.on('connection', function (socket) {
   // Run after user is connected
   socket.on('connection_user', function(id, userID, userName){
@@ -52,6 +51,7 @@ sockIO.on('connection', function (socket) {
   });
   // Get all connected usernames
   function userNames() {
+    var connectedUsers = [];
     var getAllConnected = Object.keys(sockIO.sockets.sockets);
     var i;
     for (i = 0; i < getAllConnected.length; i++) {
