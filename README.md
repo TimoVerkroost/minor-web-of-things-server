@@ -52,6 +52,9 @@ If you are thirsty and want to know if the coffee is ready, the user can go to t
 ## Screens
 ![Flow](repo-images/wot-flow3.png)
 
+## Coffee machine heat chart
+![Flow](repo-images/graph.png)
+
 ## Features
 - Make a list with all the people, that are online and want coffee.
 - Select a random user, that needs to make coffee.
