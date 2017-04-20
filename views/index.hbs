@@ -48,6 +48,10 @@
         socket.on('get_all_connections', function (allConnected) {
           console.log("all connections " + allConnected);
         });
+        // Get all boxIDs
+        socket.on('get_all_boxIDs', function (allBoxes) {
+          console.log(allBoxes);
+        });
       }
     })();
   </script>

@@ -11,13 +11,14 @@
 
 Servo myServo;
 
-int motorTrillVal = 500;   // Set the intensitie of the vibration motor max. 1023
-int lightStripBrightness = 50; // Set the brightness of the led strip max. 255
+int motorTrillVal = 1023;   // Set the intensitie of the vibration motor max. 1023
+int lightStripBrightness = 255; // Set the brightness of the led strip max. 255
 
 int oldTime = 0;
 int oscillationTime = 500;
 String chipID;
 String serverURL = SERVER_URL;
+String updateURL = UPDATE_URL;
 OpenWiFi hotspot;
 
 void printDebugMessage(String message) {
@@ -129,10 +130,10 @@ void sendButtonPress()
 
 void sendButtonPressUpdate()
 {
-  printDebugMessage("Sending button press to server new");
+  printDebugMessage("GET" + updateURL + "/drinks");
   HTTPClient http;
   // Added by Timo Verkroost BEGIN
-  http.begin("http://cee49802.ngrok.io/drinks");
+  http.begin( updateURL + "/drinks");
   uint16_t httpCode = http.GET();
   http.end();
   // Added by Timo Verkroost END

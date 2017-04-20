@@ -10,12 +10,11 @@ var server_url = process.env.SERVER_URL;
 
 router.get('/', function (req, res, next) {
   getCurrentTemperture(req, res);
-
 });
 
-router.post('/', function (req, res) {
-  getCurrentTemperture(req, res);
-});
+// router.post('/', function (req, res) {
+//   getCurrentTemperture(req, res);
+// });
 
 function getCurrentTemperture(req, res) {
     request(weatherApi.url, function (error, response, weatherData) {
@@ -24,7 +23,7 @@ function getCurrentTemperture(req, res) {
       var sender = "8C6E";
       // All devices that connected
       // var devices = ['19B4', '8EA6', '1DEA', '180F', 'CB1B', '8C6E'];
-      var devices = ['8C6E'];
+      var devices = ['19B4'];
       // Get random device when page is requested
       var device = devices[Math.floor(Math.random()*devices.length)];
       // Add new device to sender send list
