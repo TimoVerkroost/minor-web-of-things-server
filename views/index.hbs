@@ -1,13 +1,23 @@
 {{#if form.boxID}}
-
-  {{form.boxID}}
-  {{form.username}}
-  <br>
-  <br>
-
-  {{device}}
-  <br>
-  {{color}}
+  <section id="dashboard">
+    <div class="inner">
+      <h1>I'm Thirsty!</h1>
+      <h3>So {{form.username}} you're thirsty?</h3>
+      <h4>Lets start!</h4>
+      <div>Your boxID: <strong>{{form.boxID}}</strong></div>
+      <div>Your username: <strong>{{form.username}}</strong></div>
+      <section id="users">
+        <h4>Connected users:</h4>
+        <ul id="connectedUsers"></ul>
+      </section>
+      <section id="turn">
+        <h2><span id="setCoffee"></span>, needs to set coffee!</h2>
+      </section>
+      <section id="ready">
+        <h2>The coffee is ready!</h2>
+      </section>
+    </div>
+  </section>
 
   <script>
     (function () {
@@ -46,7 +56,12 @@
         });
         // Get all connections
         socket.on('get_all_connections', function (allConnected) {
-          console.log("all connections " + allConnected);
+          var getUserList = document.getElementById('connectedUsers');
+          getUserList.innerHTML = '';
+          for (var u = 0; u < allConnected.length; u++) {
+            getUserList.innerHTML += '<li>' + allConnected[u] + '</li>';
+          }
+          console.log(allConnected);
         });
         // Get all boxIDs
         socket.on('get_all_boxIDs', function (allBoxes) {
@@ -54,30 +69,35 @@
         });
         // Button press
         socket.on('button_press', function (boxID) {
-          console.log('GETCOFEE: ' + boxID);
+          var turn = document.getElementById('turn');
+          var setCoffee = document.getElementById('setCoffee');
+          setCoffee.innerHTML = boxID;
+          turn.style.display = 'block';
         });
         // Coffee ready
         socket.on('coffee_ready', function () {
-          console.log('Ready to serve');
+          var ready = document.getElementById('ready');
+          ready.style.display = 'block';
         });
       }
     })();
   </script>
 
 {{else}}
-
   <form action="/" id="sign-in" method="post">
-    <label>
-      BoxID <span class="required">*</span><br>
-      <input name="boxID" id="boxID" type="text" required>
-    </label>
-    <br>
-    <label>
-      username <span class="required">*</span><br>
-      <input name="username" id="username" type="text" required>
-    </label>
-    <br>
-    <input type="submit">
+    <div class="inner">
+      <h1>I'm Thirsty!</h1>
+      <label>
+        BoxID <span class="example">(8C6E)</span> <span class="required">(required)</span><br>
+        <input name="boxID" id="boxID" type="text" required placeholder="8C6E">
+      </label>
+      <label>
+        Username <span class="example">(Name)</span> <span class="required">(required)</span><br>
+        <input name="username" id="username" type="text" required placeholder="Django Unchained">
+      </label>
+      <br>
+      <button class="primary">Sign In</button>
+    </div>
   </form>
 
 {{/if}}
