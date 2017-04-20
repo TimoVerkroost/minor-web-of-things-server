@@ -47,25 +47,40 @@ void setup()
 
 void loop()
 {
+//  When the current milliseconds of the nodeMCU running is higher then the [oldTime] +
+// The delay in milliseconds for checking the coffee, the script will check
+// the current coffee temperture. If the temperture is higher or equal to 55 it will send a mesage.
   if (millis() > oldTime + REQUEST_DELAY_COFFEE)
   {
-    float coffeeTemperture = checkCoffeeTemperture();
-    if (coffeeTemperture > 35) {
+    float coffeeTemperture = getCoffeeTemperture();
+    if (coffeeTemperture => 55) {
       sendToCoffeeReadyToExpress();
+      coffeeIsReady();
     }
     oldTime = millis();
   }
 }
-
+// Call Express API To show that the coffee is ready on the website.
 void sendToCoffeeReadyToExpress() {
-  Serial.println("asdasd");
   HTTPClient http;
   http.begin("http://wot-drinks.herokuapp.com/temp/");
   http.GET();
   http.end();
 }
 
-float checkCoffeeTemperture()
+// 5 minutes after the Coffee is above 55 degrees celcius the LED strip will
+// show the color HotPink. There will be a 10 minutes delay and then the led 
+// will show the current color again of the coffee temperture. 
+void coffeeIsReady() {
+  delay(300000);
+  colorWipe(strip.Color(255, 105, 180), 50);
+  delay(600000);
+
+}
+
+float getCoffeeTemperture()
+// Get current temperture and humidity from DHT module. Display the current
+// temperture with leds on the led strip.
 {
   float t = dht.readTemperature();
   float h = dht.readHumidity();
