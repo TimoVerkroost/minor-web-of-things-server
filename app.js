@@ -24,6 +24,7 @@ app.use(compression());
 app.sockIO = sockIO;
 
 var devices = [];
+var connectedUsers = [];
 sockIO.on('connection', function (socket) {
   // Run after user is connected
   socket.on('connection_user', function(id, userID, userName){
@@ -51,7 +52,6 @@ sockIO.on('connection', function (socket) {
   });
   // Get all connected usernames
   function userNames() {
-    var connectedUsers = [];
     var getAllConnected = Object.keys(sockIO.sockets.sockets);
     var i;
     for (i = 0; i < getAllConnected.length; i++) {
@@ -78,32 +78,22 @@ sockIO.on('connection', function (socket) {
 
 });
 
-app.use('/drinks', function (req, res, next) {
-  getCurrentTemperture(req, res);
+app.use('/temp/', function (req, res, next) {
+  res.render('temp');
+  sockIO.emit('coffee_ready');
 });
 
-function getCurrentTemperture(req, res) {
+app.use('/drinks', function (req, res, next) {
+  var device = getRandomUser(devices);
+  getCurrentTemperture(req, res, device);
+  sockIO.emit('button_press', device);
+});
+
+function getCurrentTemperture(req, res, device) {
   request(weatherApi.url, function (error, response, weatherData) {
     var temp = chooseTheDrink(Math.round(JSON.parse(weatherData).main.temp));
     // Sender ID
     var sender = "8C6E";
-    // Remove undefined from devices
-    function removeA(devices) {
-      var what, a = arguments, L = a.length, ax;
-      while (L > 1 && devices.length) {
-        what = a[--L];
-        while ((ax= devices.indexOf(what)) !== -1) {
-          arr.splice(ax, 1);
-        }
-      }
-      return devices;
-    }
-    removeA(devices, undefined);
-    console.log(devices);
-    // All devices that connected hardcoded
-    // var devices = ['19B4', '8EA6', '1DEA', '180F', 'CB1B', '8C6E'];
-    // Get random device when page is requested
-    var device = devices[Math.floor(Math.random()*devices.length)];
     // Add new device to sender send list
     var api_url_new = "/api.php?t=sdc&d="+ sender +"&td="+ device +"&c="+ temp + "&m=JIJ GAAT KOFFIE HALEN!, JE GAAT ZELF KOFFIE HALEN!";
     var call_url_new = server_url + api_url_new;
@@ -143,6 +133,25 @@ function chooseTheDrink(temperture) {
     default:
       return "ffff00";
   }
+}
+
+function getRandomUser(devices) {
+  // Remove undefined from devices
+  function removeA(devices) {
+    var what, a = arguments, L = a.length, ax;
+    while (L > 1 && devices.length) {
+      what = a[--L];
+      while ((ax= devices.indexOf(what)) !== -1) {
+        devices.splice(ax, 1);
+      }
+    }
+    return devices;
+  }
+  removeA(devices, undefined);
+  removeA(devices, null);
+  // Get random device when page is requested
+  var deviceSelect = devices[Math.floor(Math.random()*devices.length)];
+  return deviceSelect;
 }
 
 // view engine setup

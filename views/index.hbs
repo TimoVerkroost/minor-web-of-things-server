@@ -30,7 +30,7 @@
         socket.on('connection_user', function (id, otherID, otherUser) {
           // Current user
           if (socket.id === id) {
-            console.log("connectME " + socket.username);
+
           }
           // Other user
           if (socket.id !== id) {
@@ -51,6 +51,14 @@
         // Get all boxIDs
         socket.on('get_all_boxIDs', function (allBoxes) {
           console.log(allBoxes);
+        });
+        // Button press
+        socket.on('button_press', function (boxID) {
+          console.log('GETCOFEE: ' + boxID);
+        });
+        // Coffee ready
+        socket.on('coffee_ready', function () {
+          console.log('Ready to serve');
         });
       }
     })();
