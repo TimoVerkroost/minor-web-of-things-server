@@ -1,21 +1,29 @@
 {{#if form.boxID}}
   <section id="dashboard">
-    <div class="inner">
-      <h1>I'm Thirsty!</h1>
-      <h3>So {{form.username}} you're thirsty?</h3>
-      <h4>Lets start!</h4>
-      <div>Your boxID: <strong>{{form.boxID}}</strong></div>
-      <div>Your username: <strong>{{form.username}}</strong></div>
-      <section id="users">
-        <h4>Connected users:</h4>
-        <ul id="connectedUsers"></ul>
-      </section>
-      <section id="turn">
-        <h2><span id="setCoffee"></span>, needs to set coffee!</h2>
-      </section>
-      <section id="ready">
-        <h2>The coffee is ready!</h2>
-      </section>
+    <div class="inner content">
+        <h1>Welcome to I'm Thirsty!</h1>
+        <section>
+            <h3>So {{form.username}}, you're thirsty?</h3>
+            <h4>Lets start!</h4>
+            <p class="instructions">Press the button on your box, too see who needs to get the drinks</p>
+            <section id="turn">
+              <h2><span id="setCoffee"></span>, needs to set coffee!</h2>
+            </section>
+            <section id="ready">
+              <h2>The coffee is ready!</h2>
+              <p>You don't have to be thirsty for much longer</p>
+            </section>
+        </section>
+        <aside>
+            <section id="yourData">
+                <p>Your boxID: <br/><strong>{{form.boxID}}</strong></p>
+                <p>Your username: <br/><strong>{{form.username}}</strong></p>
+            </section>
+          <section id="users">
+            <h4>Connected users:</h4>
+            <ul id="connectedUsers"></ul>
+          </section>
+      </aside>
     </div>
   </section>
 

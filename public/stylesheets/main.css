@@ -126,7 +126,6 @@ button.primary:focus {
 }
 
 #dashboard .inner {
-  display: inline-block;
   padding: 2em;
   box-sizing: border-box;
   max-width: 40em;
@@ -134,4 +133,84 @@ button.primary:focus {
   background-color: rgba(54, 54, 54, 0.8);
   color: #fefefe;
   border-radius: 1em;
+}
+
+.content h1{
+    width: 100%;
+}
+h2 {
+    font-size: 1.2em;
+}
+.content section{
+    text-align: center;
+    width: 100%;
+}
+.content> section h4{
+    font-size: 3em;
+    margin: 0;
+}
+
+@media screen and (min-width: 30em) {
+    .content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        flex-basis: 100%;
+    }
+    .content section{
+        width: 55%;
+    }
+}
+
+#yourData,
+#users,
+#turn,
+#ready{
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    border-radius: 0.5em;
+    background: rgbA(255,255,255,0.3);
+}
+
+#users h4{
+    margin: 0;
+}
+#users ul{
+    max-height: 15em;
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: left;
+    margin: 0;
+}
+@media screen and (min-width: 35em) {
+    #yourData{
+        display: flex;
+        justify-content: space-between;
+    }
+    .content aside #yourData p {
+        width: 50%;
+    }
+}
+.instructions{
+    padding: 0.5em 0;
+    border-top: 0.1em solid #666666;
+    border-bottom: 0.1em solid #666666;
+}
+.content aside {
+    width: 100%;
+    margin: 0;
+    padding: 0
+}
+.content aside p{
+    text-align: center;
+    margin: 0;
+    padding: 0
+}
+
+@media screen and (min-width: 30em) {
+    .content aside {
+        width: 40%;
+    }
 }
