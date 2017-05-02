@@ -10,25 +10,23 @@
 #include "WS2812_util.h"
 
 Servo myServo;
-
-int motorTrillVal = 1023;   // Set the intensitie of the vibration motor max. 1023
-int lightStripBrightness = 255; // Set the brightness of the led strip max. 255
+int tiltval;  // the value of the tiltsensor
+int motorTrillVal = 1023;   //max. 1023
+int lightStripBrightness = 255; //max. 255
 
 int oldTime = 0;
 int oscillationTime = 500;
 String chipID;
 String serverURL = SERVER_URL;
-String updateURL = UPDATE_URL;
 OpenWiFi hotspot;
 
-void printDebugMessage(String message) {
+void printDebugMessage(String message){
 #ifdef DEBUG_MODE
   Serial.println(String(PROJECT_SHORT_NAME) + ": " + message);
 #endif
 }
 
-void setup()
-{
+void setup(){
   pinMode(motorpin, OUTPUT);
   pinMode (tiltSwitch, INPUT) ;
   pinMode(BUTTONLOW_PIN, OUTPUT);
@@ -45,13 +43,11 @@ void setup()
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
-  while (digitalRead(BUTTON_PIN) == LOW)
-  {
+  while (digitalRead(BUTTON_PIN) == LOW){
     counter++;
     delay(10);
 
-    if (counter > 500)
-    {
+    if (counter > 500){
       wifiManager.resetSettings();
       printDebugMessage("Remove all wifi settings!");
       setAllPixels(255, 0, 0, 1.0);
@@ -71,8 +67,7 @@ void setup()
 }
 
 //This method starts an oscillation movement in both the LED and servo
-void oscillate(float springConstant, float dampConstant, int c)
-{
+void oscillate(float springConstant, float dampConstant, int c){
   SpringyValue spring;
 
   byte red = (c >> 16) & 0xff;
@@ -84,15 +79,13 @@ void oscillate(float springConstant, float dampConstant, int c)
   spring.perturb(255);
 
   //Start oscillating
-  for (int i = 0; i < oscillationTime; i++)
-  {
+  for (int i = 0; i < oscillationTime; i++){
     spring.update(0.01);
     setAllPixels(red, green, blue, abs(spring.x) / 255.0);
     myServo.write(90 + spring.x / 4);
 
     //Check for button press
-    if (digitalRead(BUTTON_PIN) == LOW)
-    {
+    if (digitalRead(BUTTON_PIN) == LOW){
       //Fade the current color out
       fadeBrightness(red, green, blue, abs(spring.x) / 255.0);
       return;
@@ -102,30 +95,24 @@ void oscillate(float springConstant, float dampConstant, int c)
   fadeBrightness(red, green, blue, abs(spring.x) / 255.0);
 }
 
-void loop()
-{
-    // tiltval = digitalRead (tiltSwitch);
-    if (tiltval == LOW)
-    {
-        //Check for button press
-        if (digitalRead(BUTTON_PIN) == LOW)
-        {
-          sendButtonPressUpdate();
-          sendButtonPress();
-          delay(250);
-        }
-
-        //Every requestDelay, send a request to the server
-        if (millis() > oldTime + REQUEST_DELAY)
-        {
-          requestMessage();
-          oldTime = millis();
-        }
+void loop(){
+  tiltval = digitalRead (tiltSwitch);
+  delay(500);
+    if (tiltval == LOW){    // If the box is up right, than allow the button press and receive messages. Else do nothing
+    //Check for button press
+    if (digitalRead(BUTTON_PIN) == LOW){
+      sendButtonPress();
+      delay(250);
     }
+    //Every requestDelay, send a request to the server
+    if (millis() > oldTime + REQUEST_DELAY){
+      requestMessage();
+      oldTime = millis();
+    }
+  }
 }
 
-void sendButtonPress()
-{
+void sendButtonPress(){
   printDebugMessage("Sending button press to server");
   HTTPClient http;
   http.begin(serverURL + "/api.php?t=sqi&d=" + chipID);
@@ -133,19 +120,7 @@ void sendButtonPress()
   http.end();
 }
 
-void sendButtonPressUpdate()
-{
-  printDebugMessage("GET" + updateURL + "/drinks");
-  HTTPClient http;
-  // Added by Timo Verkroost BEGIN
-  http.begin( updateURL + "/drinks");
-  uint16_t httpCode = http.GET();
-  http.end();
-  // Added by Timo Verkroost END
-}
-
-void requestMessage()
-{
+void requestMessage(){
 //Serial.print("requestMessageCalled");
   hideColor();
 
@@ -154,17 +129,14 @@ void requestMessage()
   http.begin(requestString);
   int httpCode = http.GET();
 
-  if (httpCode == 200)
-  {
+  if (httpCode == 200){
     String response;
     response = http.getString();
 
-    if (response == "-1")
-    {
+    if (response == "-1"){
       printDebugMessage("There are no messages waiting in the queue");
     }
-    else
-    {
+    else{
       //Get the indexes of some commas, will be used to split strings
       int firstComma = response.indexOf(',');
       int secondComma = response.indexOf(',', firstComma + 1);
@@ -176,10 +148,10 @@ void requestMessage()
       String dampConstant = response.substring(secondComma + 1, thirdComma);;
       String message = response.substring(thirdComma + 1, response.length());;
 
-      analogWrite(motorpin, motorTrillVal);  // Send a signal to turn the motorpin(D5) on.
+      analogWrite(motorpin, motorTrillVal);
       printDebugMessage("Start trilling");
-      delay(2000); // wait 2 seconds
-      analogWrite(motorpin, 0); //turn off the motorpin(D5).
+      delay(2000);
+      analogWrite(motorpin, 0);
 
       printDebugMessage("Message received from server: \n");
       printDebugMessage("Hex color received: " + hexColor);
@@ -187,21 +159,21 @@ void requestMessage()
       printDebugMessage("Damp constant received: " + dampConstant);
       printDebugMessage("Message received: " + message);
 
+
+
       //Extract the hex color and fade the led strip
       int number = (int) strtol( &response[1], NULL, 16);
       oscillate(springConstant.toFloat(), dampConstant.toFloat(), number);
     }
   }
-  else
-  {
+  else {
     ESP.reset();
   }
 
   http.end();
 }
 
-String generateChipID()
-{
+String generateChipID(){
   String chipIDString = String(ESP.getChipId() & 0xffff, HEX);
 
   chipIDString.toUpperCase();
