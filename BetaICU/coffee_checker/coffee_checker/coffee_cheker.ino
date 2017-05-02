@@ -15,6 +15,7 @@ int oldTime = 0;
 int oscillationTime = 500;
 String chipID;
 String serverURL = SERVER_URL;
+int fakeTemp = 20;
 OpenWiFi hotspot;
 
 void printDebugMessage(String message) {
@@ -42,7 +43,6 @@ void setup()
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
-  checkCoffeeTemperture();
 }
 
 void loop()
@@ -53,8 +53,8 @@ void loop()
   if (millis() > oldTime + REQUEST_DELAY_COFFEE)
   {
     float coffeeTemperture = getCoffeeTemperture();
-    if (coffeeTemperture => 55) {
-      sendToCoffeeReadyToExpress();
+    fakeTemp++;    
+    if (fakeTemp >= 55) {
       coffeeIsReady();
     }
     oldTime = millis();
@@ -62,27 +62,29 @@ void loop()
 }
 // Call Express API To show that the coffee is ready on the website.
 void sendToCoffeeReadyToExpress() {
-  HTTPClient http;
+  HTTPClient http;    
   http.begin("http://wot-drinks.herokuapp.com/temp/");
-  http.GET();
-  http.end();
+  uint16_t httpCode = http.GET();  
+  http.end();  
 }
 
 // 5 minutes after the Coffee is above 55 degrees celcius the LED strip will
 // show the color HotPink. There will be a 10 minutes delay and then the led 
 // will show the current color again of the coffee temperture. 
 void coffeeIsReady() {
-  delay(300000);
-  colorWipe(strip.Color(255, 105, 180), 50);
-  delay(600000);
-
+  delay(10000); //change to 300000
+  colorWipe(strip.Color(255, 10, 180), 50);
+  sendToCoffeeReadyToExpress();
+  delay(20000); //change to 600000
+  fakeTemp = 20; // Reset fake temperture
 }
 
 float getCoffeeTemperture()
 // Get current temperture and humidity from DHT module. Display the current
 // temperture with leds on the led strip.
 {
-  float t = dht.readTemperature();
+//  float t = dht.readTemperature();
+  float t = fakeTemp;
   float h = dht.readHumidity();
   if (isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");

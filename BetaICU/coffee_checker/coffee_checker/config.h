@@ -12,7 +12,7 @@
 #define REQUEST_DELAY 2000
 
 // Coffee Checker delay
-#define REQUEST_DELAY_COFFEE 15000
+#define REQUEST_DELAY_COFFEE 1000 //Change to 15000 (15seconds)
 
 // Temperture module and slot
 #define DHTPIN D3
