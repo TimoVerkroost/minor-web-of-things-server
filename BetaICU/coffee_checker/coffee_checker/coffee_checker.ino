@@ -53,7 +53,7 @@ void loop()
   if (millis() > oldTime + REQUEST_DELAY_COFFEE)
   {
     float coffeeTemperture = getCoffeeTemperture();
-    fakeTemp++;    
+    fakeTemp+=10;    
     if (fakeTemp >= 55) {
       coffeeIsReady();
     }
@@ -61,9 +61,10 @@ void loop()
   }
 }
 // Call Express API To show that the coffee is ready on the website.
-void sendToCoffeeReadyToExpress() {
+void sendToCoffeeStatusToExpress(String isReady, int isTemperture) {
   HTTPClient http;    
-  http.begin("http://wot-drinks.herokuapp.com/temp/");
+  Serial.println(String(LOCAL_SERVER_URL)+"/temp/"+isReady+"/"+String(isTemperture));
+  http.begin(String(LOCAL_SERVER_URL)+"/temp/"+isReady+"/"+String(isTemperture));
   uint16_t httpCode = http.GET();  
   http.end();  
 }
@@ -74,7 +75,7 @@ void sendToCoffeeReadyToExpress() {
 void coffeeIsReady() {
   delay(10000); //change to 300000
   colorWipe(strip.Color(255, 10, 180), 50);
-  sendToCoffeeReadyToExpress();
+  sendToCoffeeStatusToExpress("true", 55);
   delay(20000); //change to 600000
   fakeTemp = 20; // Reset fake temperture
 }
@@ -90,6 +91,7 @@ float getCoffeeTemperture()
     Serial.println("Failed to read from DHT sensor!");
     return 0;
   }
+  sendToCoffeeStatusToExpress("false", t);
   Serial.println(String(millis())+","+String(t)+","+String(h));
   if (t >= 50.00){
     colorWipe(strip.Color(255, 0, 0), 50);
