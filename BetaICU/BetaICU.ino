@@ -18,6 +18,7 @@ int oldTime = 0;
 int oscillationTime = 500;
 String chipID;
 String serverURL = SERVER_URL;
+String updateURL = UPDATE_URL;
 OpenWiFi hotspot;
 
 void printDebugMessage(String message){
@@ -101,6 +102,7 @@ void loop(){
     if (tiltval == LOW){    // If the box is up right, than allow the button press and receive messages. Else do nothing
     //Check for button press
     if (digitalRead(BUTTON_PIN) == LOW){
+      sendButtonPressUpdate();
       sendButtonPress();
       delay(250);
     }
@@ -118,6 +120,16 @@ void sendButtonPress(){
   http.begin(serverURL + "/api.php?t=sqi&d=" + chipID);
   uint16_t httpCode = http.GET();
   http.end();
+}
+
+void sendButtonPressUpdate() {   
+  printDebugMessage("GET" + updateURL + "/drinks");   
+  HTTPClient http;    
+  // Added by Timo Verkroost BEGIN    
+  http.begin( updateURL + "/drinks");   
+  uint16_t httpCode = http.GET();   
+  http.end();   
+  // Added by Timo Verkroost END    
 }
 
 void requestMessage(){
