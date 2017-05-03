@@ -114,7 +114,8 @@ function getCurrentTemperture(req, res, device) {
     // Add new device request
     request(call_url_new, function (error, response, data) {
       res.locals.data =  JSON.parse(data);
-      res.render('drinks', { device: device, color: temp });
+      //res.render('drinks', { device: device, color: temp });
+      res.send(req.params);
     });
     // Delete others connected from send list request
     var i;
