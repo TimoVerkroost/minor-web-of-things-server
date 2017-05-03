@@ -78,9 +78,10 @@ sockIO.on('connection', function (socket) {
 
 });
 
-app.use('/temp/', function (req, res, next) {
-  res.render('temp');
-  sockIO.emit('coffee_ready');
+app.use('/temp/:status/:temp', function (req, res, next) {
+  res.send(req.params);
+  sockIO.emit('coffee_ready', req.params.status);
+  sockIO.emit('coffee_temp', req.params.temp);
 });
 
 app.use('/drinks', function (req, res, next) {
