@@ -20,11 +20,11 @@ When everyone, that wants to, has chosen to join the drinking list, the app will
 
 <details>
 <br/><strong>How it works</strong><br/>
-- When a user wants to drink something, he or she presses a button, that sends a signal to a php server, that talks to a Express server. The Express server talks to a Weather API and it gets the current Temperature and Time.
+- When a user wants to drink something, he or she presses a button, that sends a signal to a PHP server, that talks to a Express server. The Express server talks to a Weather API and it gets the current Temperature and Time.
 <br/><br/>
 - The Expres server looks at the Time and Temperature and choices, the best fitting drink for the current time and temperature. Then the server sends the drink type to a website, that keeps track of the drink type.
 <br/><br/>
-- The Express server sends a message to the php server and the php server changes the color of all the connected buttons, to a color that represends the selected drink type. If a different user also wants that drink she presses her button and she gets added to the list, with people that want to same drink.
+- The Express server sends a message to the PHP server and the PHP server changes the color of all the connected buttons, to a color that represents the selected drink type. If a different user also wants that drink she presses her button and she gets added to the list, with people that want to same drink.
 <br/><br/>
 - When you are finished with preparing the drinks, you can see who also wants that drink and serving the drinks will be easier.
 </details>
@@ -34,9 +34,9 @@ If you are thirsty and want to know if the coffee is ready, the user can go to t
 
 <details>
 <br/><strong>How it works</strong><br/>
-- Near the coffee machine is a box, with heat-sensor, that tracks if the coffee machine is setting coffee (every 15seconds). The box displays a color, that indicates if the coffee is ready or not (This collor corresponds with the temperature of the machine).
+- Near the coffee machine is a box, with heat-sensor, that tracks if the coffee machine is setting coffee (every 15seconds). The box displays a color, that indicates if the coffee is ready or not (This color corresponds to the temperature of the machine).
 <br/><br/>
-- When the temperature of the coffee machine is 35 °C or more, the box will send the temperature directly to the Express server. The Express server, will show a message on the website, that the coffee is ready.
+- When the temperature of the coffee machine is 35 °C or more, the box will send the temperature directly to the Express server. The Express server will show a message on the website, that the coffee is ready.
 </details>
 
 ## Flows
@@ -50,6 +50,7 @@ If you are thirsty and want to know if the coffee is ready, the user can go to t
 ![Flow](repo-images/wot-flow3.png)
 
 ## Coffee machine heat chart
+During a test run of the coffee machine, we created a temperature chart. Every 15 seconds a measurement was done at the temperature and humidity above the Coffee machine. In the chart, you are able to see that it takes approximately six minutes to get to the maximum measurable temperature of the DHT11 module. Five minutes after hitting the maximum temperature you can see in the chart that the temperature goes down, this is because of the coffee machine is done making the coffee. When the coffee machine gets to a temperature of 55 degrees the node module will display the color "Hotpink" after five minutes.
 ![Flow](repo-images/graph.png)
 
 ## Features
