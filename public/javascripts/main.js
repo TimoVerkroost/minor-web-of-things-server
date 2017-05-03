@@ -37,7 +37,7 @@
       var getUserList = document.getElementById('connectedUsers');
       getUserList.innerHTML = '';
       for (var u = 0; u < allConnected.length; u++) {
-        getUserList.innerHTML += '<li>' + allConnected[u] + '</li>';
+        getUserList.innerHTML += '<div>' + allConnected[u] + '</div>';
       }
       //console.log(allConnected);
     });

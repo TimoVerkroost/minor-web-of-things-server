@@ -2,55 +2,99 @@
 <section id="dash">
   <header>
     <p class="logo">I'm Thirsty</p>
-    <p>Welcome <span class="username">{{form.username}}</span> (<span class="boxID">19B4</span>), </p>
+    <p>Welcome <span class="username">{{form.username}}</span> (<span class="boxID">{{form.boxID}}</span>), </p>
   </header>
 
   <main>
-    <section id="blocks">
-      <h2>Dashboard</h2>
-      <section class="item">
-        <span>Online users</span>
-        <p id="totalUsers"></p>
-      </section>
-
-      <section class="item">
-        <span>Temperature</span>
-        <p><span id="tempC"></span> &deg;C</p>
-      </section>
-
-      <section class="item">
-        <span>Your boxID</span>
-        <p>19B4</p>
-      </section>
-    </section>
-
-    <!-- <button class="BigAssButton">Press !!</button> -->
-
-    <section id="container">
-      <section id="messages">
-        <section id="text">
-          <h3>So <span class="username">{{form.username}}</span>, you're thirsty?</h3>
-          <h4>Lets start!</h4>
-          <p class="instructions">Press the button on your box, too see who needs to get the drinks</p>
+    <div class="inner">
+      <section id="blocks">
+        <h2>Dashboard</h2>
+        <section class="item">
+          <span>Online users</span>
+          <p id="totalUsers"></p>
         </section>
-        <section id="turn">
-          <h2><span id="setCoffee">{{form.boxID}}</span>, needs to set coffee!</h2>
+
+        <section class="item">
+          <span>Temperature</span>
+          <p><span id="tempC"></span> &deg;C</p>
         </section>
-        <section id="ready">
-          <h2>The coffee is ready!</h2>
-          <p>You don't have to be thirsty for much longer</p>
+
+        <section class="item">
+          <span>Your boxID</span>
+          <p>{{form.boxID}}</p>
         </section>
       </section>
-    </section>
+
+      <!-- <button class="BigAssButton">Press !!</button> -->
+
+      <section id="container">
+        <section id="messages">
+          <section id="text">
+            <h3>So <span class="username">{{form.username}}</span>, you're thirsty?</h3>
+            <h4>Lets start!</h4>
+            <p class="instructions">Press the button on your box, too see who needs to get the drinks</p>
+          </section>
+          <section id="turn">
+            <h2><span id="setCoffee">{{form.boxID}}</span>, needs to set coffee!</h2>
+          </section>
+          <section id="ready">
+            <h2>The coffee is ready!</h2>
+            <p>You don't have to be thirsty for much longer</p>
+          </section>
+        </section>
+      </section>
+    </div>
   </main>
   <aside>
-    <button id="pressButton">Press</button>
+    <!--<button id="pressButton">Press</button>-->
     <section id="users">
-      <h4>Connected users:</h4>
-      <ul id="connectedUsers">
-      </ul>
+      <div class="inner">
+        <h4>Connected users:</h4>
+        <div id="connectedUsers">
+        </div>
+      </div>
     </section>
   </aside>
+  <footer>
+    <p>Copyright 2017 - Documentation</p>
+    <input type="checkbox">
+
+    <section id="documentation">
+      <h1>Documentation</h1>
+      <article>
+        <h2>Instructions</h2>
+        <ol>
+          <li>Upload the correct code to your box.</li>
+          <li>Give the box a power supply. (Battery, powerbank)</li>
+          <li>Press the button, when you are thirsty.</li>
+          <li>See who's box is vibrating and blinking.</li>
+          <li>If it is your box, you need to get the drinks (see the color for what drink you need to get).</li>
+          <li>If it is not your box, that lights up. You can just sit and wait for the coffee, to be brought to you.</li>
+        </ol>
+      </article>
+
+      <article>
+        <h2>Colors</h2>
+        <ul>
+          <li><span class="colorTea">#d0f0c0</span> <strong>Light green:</strong> When the outside temperture is less than or equal to -5 &#8451;, the system will chose the color light green, when a user selects, that he/she wants something to drink. This color shows, that the best possible drink for that temperture is a cup of <stong>tea</strong>.</li>
+          <li><span class="colorCoffee">#a46331</span> <strong>Brown:</strong> If the outside temperture is between -4 &#8451; and 15 &#8451;, the system will chose the color brown, to show that the best drink is <strong>Coffee</strong> (and who doesn't like coffee?).</li>
+          <li><span class="colorBeer">#ffff00</span> <strong>Yellow:</strong> When the outside temperture is more than 15 &#8451;, the system will chose the yellow, to show that the best possible solution for that kind of heat, is to have a nice cold <strong>Beer</strong></li>
+          <p>*These colors a better visable on the led boxes*</p>
+        </ul>
+      </article>
+
+      <article>
+        <h2>Tilt-switch</h2>
+        <p>The tilt-switch detects the orientation of a led box. If the box stands up right, than the box will be on. When the box is laying flat, box will be on standby and won't receive of send any messages, while it is lanying on it's side.</p>
+      </article>
+      <article>
+        <h2>Vibration motor</h2>
+        <p>The vibration motor sends vibrations, to your box when it received a new message. This is, so that the user does not only get a visual feedback (led-lights), but also a auditory feedback (vibrations).</p>
+      </article>
+
+
+    </section>
+  </footer>
 </section>
   <script>
     // User information form

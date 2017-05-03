@@ -182,10 +182,6 @@ h2 {
 #turn,
 #ready{
     width: 100%;
-    padding: 0.5em;
-    margin-bottom: 0.5em;
-    border-radius: 0.5em;
-    background: rgbA(255,255,255,0.3);
 }
 
 #users h4{
@@ -232,6 +228,16 @@ h2 {
 main{
   width: 100%;
 }
+
+main .inner,
+#users .inner{
+  background-color: #fff;
+  padding: 1em;
+  box-sizing: border-box;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,.05), 0 6px 20px 0 rgba(0,0,0,.05);
+  margin: 1em;
+}
+
 aside{
   display: flex;
   flex-direction: column;
@@ -243,12 +249,10 @@ aside{
 aside #users{
   width: 90%;
   height: 100%;
-  background: RGBA(225,225,225,0.5);
 }
 aside h4{
-  background: #e6614f;
-  padding: 0.2em;
-  text-decoration: underline;
+  background: #3498db;
+  padding: 0.5em;
 }
 aside ul{
   margin-top: 0.5em;
@@ -302,6 +306,7 @@ header{
   margin: 0 0 1em 0;
   background: #2a2d33;
   box-sizing: border-box;
+  padding: 1em;
 }
 
 header p.logo{
@@ -344,9 +349,7 @@ header p:nth-of-type(2){
   box-sizing:border-box;
   padding: 1em;
   border-radius: 0.5em;
-  background: RGBA(225,225,225,0.5);
-  border: none;
-  border-bottom: thick double #000;
+  border: 1px solid #000;
   text-align: center;
 }
 @media screen and (min-width: 40em) {
@@ -463,4 +466,24 @@ footer {
 #documentation{
   width: 100%;
   box-sizing: border-box;
+}
+
+#connectedUsers > div {
+  padding: 0.8em 0;
+  border-bottom: 1px solid #000;
+  color: #000;
+  text-align: left;
+}
+
+footer {
+  text-align: left;
+}
+
+footer > p {
+  margin-left: 1em;
+}
+
+#documentation {
+  background-color: #ffffff;
+  padding: 1em;
 }
