@@ -23,6 +23,6 @@
 #define BACKUP_SSID "BackupSSIDName"
 #define BACKUP_PASSWORD "BackupPassword"
 
-#define UPDATE_URL "http://6096eb0f.ngrok.io"
+#define UPDATE_URL "http://wot-drinks.herokuapp.com"
 
 #endif

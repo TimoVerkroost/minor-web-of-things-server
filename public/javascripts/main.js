@@ -1,5 +1,6 @@
 (function () {
   /* global io */
+  var totalUsers = document.getElementById('totalUsers');
   // Check if socket is available
   if (document.getElementById('socketScript')) {
     var socket = io();
@@ -12,21 +13,23 @@
       console.log("recieve");
     });
     // Connect user feedback
-    socket.on('connection_user', function (id, otherID, otherUser) {
+    socket.on('connection_user', function (id, otherID, otherUser, totalConnected) {
       // Current user
       if (socket.id === id) {
-
+        totalUsers.innerHTML = totalConnected;
       }
       // Other user
       if (socket.id !== id) {
         console.log("connect " + otherID + " " + otherUser);
+        totalUsers.innerHTML = totalConnected;
       }
     });
     // Disconnect user feedback
-    socket.on('disconnect_user', function (id, otherID, otherUser) {
+    socket.on('disconnect_user', function (id, otherID, otherUser, totalConnected) {
       // Other user
       if (socket.id !== id) {
         console.log("dis: " + otherID + " " + otherUser);
+        totalUsers.innerHTML = totalConnected;
       }
     });
     // Get all connections
@@ -58,6 +61,11 @@
     // Coffee temp
     socket.on('coffee_temp', function (temp) {
       console.log(temp);
+    });
+
+    // Outside temp
+    socket.on('outside_temp', function (temp) {
+      document.getElementById('tempC').innerHTML = temp;
     });
   }
 })();

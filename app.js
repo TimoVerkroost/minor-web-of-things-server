@@ -25,22 +25,35 @@ app.sockIO = sockIO;
 
 var devices = [];
 sockIO.on('connection', function (socket) {
+
+  function getOutsideTemp() {
+    request(weatherApi.url, function (error, response, weatherData) {
+      sockIO.emit('outside_temp', Math.round(JSON.parse(weatherData).main.temp));
+    });
+  }
+  getOutsideTemp();
+  setInterval(function(){
+    getOutsideTemp();
+  }, 60000);
+
   // Run after user is connected
   socket.on('connection_user', function(id, userID, userName){
+    var totalConnected = sockIO.engine.clientsCount;
     socket.boxID = userID;
     socket.username = userName;
     // Get connected usernames
     userNames();
     boxIDs();
     // Save user data
-    sockIO.emit('connection_user', socket.id, socket.boxID, socket.username);
+    sockIO.emit('connection_user', socket.id, socket.boxID, socket.username, totalConnected);
 
     // User disconnect
     socket.on('disconnect', function(){
+      var totalConnected = sockIO.engine.clientsCount;
       // Get connected usernames
       userNames();
       boxIDs();
-      sockIO.emit('disconnect_user', socket.id, socket.boxID, socket.username);
+      sockIO.emit('disconnect_user', socket.id, socket.boxID, socket.username, totalConnected);
       // Delete disconnected user from que
       var api_url_delete = "/api.php?t=rdc&d=8C6E&td=" + socket.boxID;
       var call_url_delete = server_url + api_url_delete;
