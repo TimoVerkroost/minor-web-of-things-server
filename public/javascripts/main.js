@@ -51,16 +51,24 @@
       var setCoffee = document.getElementById('setCoffee');
       setCoffee.innerHTML = boxID;
       turn.style.display = 'block';
+      // After 10 min hide
+      setTimeout(function(){
+        turn.style.display = 'none';
+      }, 600000);
     });
     // Coffee ready
     socket.on('coffee_ready', function (status) {
       var ready = document.getElementById('ready');
       ready.style.display = 'block';
+      // After 5 min hide
+      setTimeout(function(){
+        ready.style.display = 'none';
+      }, 300000);
     });
 
     // Coffee temp
     socket.on('coffee_temp', function (temp) {
-      console.log(temp);
+
     });
 
     // Outside temp
