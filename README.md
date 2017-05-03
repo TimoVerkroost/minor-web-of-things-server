@@ -1,8 +1,6 @@
 # Minor Web of Things - I'm Thirsty
 ## Live version
 - http://wot-drinks.herokuapp.com/
-<!-- - http://wot-drinks.herokuapp.com/drinks -->
-<!-- - http://wot-drinks.herokuapp.com/temp -->
 
 ## Concept
 Serving drinks can be a pain. By using this web application, this no longer has to be the case. This app, will keep track of who and what everyone wants to drink.
@@ -71,6 +69,34 @@ During a test run of the coffee machine, we created a temperature chart. Every 1
 - [x] Box feedback, when receiving a message. (vibration and light signal).
 - [x] Frendly ui/ ux
 
+### Usage
+- Upload the correct code to your box.
+- Give the box a power supply. (Battery, powerbank)
+- Press the button, when you are thirsty.
+- See who's box is vibrating and blinking.
+- If it is your box, you need to get the drinks (see the color for what drink you need to get).
+- If it is not your box, that lights up. You can just sit and wait for the coffee, to be brought to you.
+
+### Colors
+- <span style="color:#d0f0c0;">#d0f0c0</span> <strong>Light green:</strong> When the outside temperture is less than or equal to -5 &#8451;, the system will chose the color light green, when a user selects, that he/she wants something to drink. This color shows, that the best possible drink for that temperture is a cup of <stong>tea</strong>.
+
+- <span style="color:#a46331;">#a46331</span> <strong>Brown:</strong> If the outside temperture is between -4 &#8451; and 15 &#8451;, the system will chose the color brown, to show that the best drink is <strong>Coffee</strong> (and who doesn't like coffee?).</li>
+
+- <span style="color:#ffff00;">#ffff00</span> <strong>Yellow:</strong> When the outside temperture is more than 15 &#8451;, the system will chose the yellow, to show that the best possible solution for that kind of heat, is to have a nice cold <strong>Beer</strong>
+
+(These colors a better visable on the led boxes)
+
+### Tilt-switch
+The tilt-switch detects the orientation of a led box. If the box stands up right, than the box will be on. When the box is laying flat, box will be on standby and won't receive of send any messages, while it is lanying on it's side.
+
+![tilt-switch](repo-images/tilt-sensor.jpg)
+
+### Vibration motor
+The vibration motor sends vibrations, to your box when it received a new message. This is, so that the user does not only get a visual feedback (led-lights), but also a auditory feedback (vibrations).
+
+![vibration-motor](repo-images/vibratie-motor.jpg)
+
+
 ## Wishlist
 - [ ] Add a estimated time, when the coffee is ready. (Example: 2:31 minutes remaining).
 - [ ] Replace the head sensor with a smart socket, to track the electricity usage, to track if the coffee is ready.
@@ -80,3 +106,6 @@ During a test run of the coffee machine, we created a temperature chart. Every 1
 
 ## Sources
 - http://www.seeedstudio.com/forum/viewtopic.php?f=17&t=5636
+- http://www.barcelona-metropolitan.com/downloads/23010/download/coffee-821490.jpg?cb=a38e161ac00e1e82858886d77f42cf1a
+- https://www.sunfounder.com/media/wysiwyg/swatches/sensor_kit_v1_for_arduino/15_Tilt_Switch/15_1.jpg
+- https://static.webshopapp.com/shops/069283/files/039224572/originele-vibratie-motor-voor-thl-telefoon.jpg?_ga=2.134731185.1158232172.1493797986-1812068030.1493797986
