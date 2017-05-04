@@ -19,7 +19,7 @@
 #define DHTTYPE DHT11
 
 //NEEDS TO BE CHANGED TO CURRENT SERVER!!!!
-#define LOCAL_SERVER_URL "http://6096eb0f.ngrok.io"
+#define LOCAL_SERVER_URL "http://wot-drinks.herokuapp.com"
 #define SERVER_URL "http://oege.ie.hva.nl/~palr001/icu"
 #define CONFIG_SSID "icu"
 

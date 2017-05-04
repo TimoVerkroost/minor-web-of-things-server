@@ -76,7 +76,7 @@ void coffeeIsReady() {
   delay(10000); //change to 300000
   colorWipe(strip.Color(255, 10, 180), 50);
   sendToCoffeeStatusToExpress("true", 55);
-  delay(20000); //change to 600000
+  delay(360000); //change to 600000
   fakeTemp = 20; // Reset fake temperture
 }
 
