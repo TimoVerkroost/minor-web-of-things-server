@@ -58,17 +58,19 @@
     });
     // Coffee ready
     socket.on('coffee_ready', function (status) {
-      var ready = document.getElementById('ready');
-      ready.style.display = 'block';
-      // After 5 min hide
-      setTimeout(function(){
-        ready.style.display = 'none';
-      }, 300000);
+      if(status === 'true') {
+        var ready = document.getElementById('ready');
+        ready.style.display = 'block';
+        // After 5 min hide
+        setTimeout(function(){
+          ready.style.display = 'none';
+        }, 300000);
+      }
     });
 
     // Coffee temp
     socket.on('coffee_temp', function (temp) {
-
+      document.getElementById('coffeeTemp').innerHTML = temp;
     });
 
     // Outside temp
